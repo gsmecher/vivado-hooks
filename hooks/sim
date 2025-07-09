@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Check prerequisites
+if ! command -v git-lfs &> /dev/null
+then
+	echo "ERROR: git-lfs is not installed. It's an essential prerequisite."
+	exit
+fi
+
+oldrev="$1"
+newrev="$2"
+refname="$3"
+
+WORKTREE=autobuild/$newrev-$(echo "$refname" | rev | cut -d/ -f1 | rev)
+echo "Work tree: $WORKTREE"
+if ! git worktree add -d "$WORKTREE" "$newrev"
+then
+	echo "ERROR: git worktree failed."
+	exit
+fi
+
+cd "$WORKTREE"
+echo "Autobuild: working directory is $(pwd)"
+
+source setenv.sh
+
+# Build bitstream
+cd tcl
+vivado -mode batch -source hw.tcl -source sim.tcl
