@@ -1,9 +1,9 @@
 Vivado Hooks
 ============
 
-This directory contains post-receive hooks that allow you to set up a
-no-nonsense remote-build framework for Vivado projects. Using this, you can
-trigger builds as follows:
+This repository contains a simple remote-build framework for Vivado projects, using
+git's built-in "hooks" framework. Using this, you can trigger builds as
+follows:
 
 	$ git push -f some-machine:build HEAD:bitstream
 
@@ -40,8 +40,8 @@ Why?
 ----
 
 Until you've tried this, you probably won't understand how confining your
-current build process is, or how much it intrinsically conflicts or sidesteps
-your revison-control processes.
+current build process is, or how much it intrinsically conflicts with (or
+sidesteps) your revison-control processes.
 
 * Vivado's "remote build" infrastructure [1] relies on a fast shared
   filesystem, and is clearly intended for corporate LAN environments - this is
