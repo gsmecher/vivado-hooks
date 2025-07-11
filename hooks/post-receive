@@ -4,7 +4,8 @@
 # hooks/post-receive. It is responsible for executing other hooks in this
 # directory, and is not useful on its own. See README for details.
 
-GIT_DIR=$(dirname "$0")/..
+BASE_GIT_DIR=$(dirname "$0")/..
+unset GIT_DIR
 
 # Check prerequisites
 if ! command -v tmux &> /dev/null
@@ -19,7 +20,7 @@ HOOK="$(echo "$refname" | rev | cut -d/ -f1 | rev)"
 SESSION="$HOOK-$newrev"
 echo Creating tmux session $SESSION
 TMP=$(mktemp /tmp/pr-hook.XXXXXX) \
-	&& git --git-dir="$GIT_DIR" show "$newrev":"hooks/$HOOK" > "$TMP" \
+	&& git --git-dir="$BASE_GIT_DIR" show "$newrev":"hooks/$HOOK" > "$TMP" \
 	&& chmod +x "$TMP" \
 	&& tmux new-session -d -s "$SESSION" "\"$TMP\" \"$oldrev\" \"$newrev\" \"$refname\""
 done
