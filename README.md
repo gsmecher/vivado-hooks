@@ -86,6 +86,12 @@ A: That's what .dcp files are for - use the build log to find the most recent
    lets you open these (open_checkpoint or via the GUI) without the rest of the
    project tree.
 
+Q: Do I need a different bare repository on my build server for every project
+   using this infrastructure?
+
+A: Nope - the remote repo can be re-used for any number of projects that do (or
+   don't) have any history in common.
+
 Setting Up
 ----------
 
